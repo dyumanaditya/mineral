@@ -136,7 +136,10 @@ class WandbWriter:
             if len(value.shape) == 0:
                 bystep[step][name] = value.item()
             elif len(value.shape) == 1:
-                bystep[step][name] = wandb.Histogram(value)
+                clean = value[np.isfinite(value)]
+                if clean.size:
+                    bystep[step][name] = wandb.Histogram(clean)
+                # bystep[step][name] = wandb.Histogram(value)
             # elif len(value.shape) == 5:
             #     value = value.transpose(0, 1, 4, 2, 3)  # -> (B, T, C, H, W)
             #     value = _prepare_video(value)

@@ -31,25 +31,25 @@ class Dist(nn.Module):
     def forward(self, mu, logstd):
         if self.dist_type == 'normal':
             sigma = torch.exp(logstd)
-            distr = D.Normal(mu, sigma, validate_args=self.validate_args)
+            distr = D.Normal(mu, sigma, validate_args=False)
 
         elif self.dist_type == 'squashed_normal':
             if self.minlogstd is not None or self.maxlogstd is not None:
                 logstd = torch.clamp(logstd, self.minlogstd, self.maxlogstd)
             sigma = logstd.exp()
-            distr = SquashedNormal(mu, sigma, validate_args=self.validate_args)
+            distr = SquashedNormal(mu, sigma, validate_args=False)
 
         elif self.dist_type == 'dreamerv3_normal':
             lo, hi = self.minstd, self.maxstd
             std = (hi - lo) * torch.sigmoid(logstd + 2.0) + lo
             mu = torch.tanh(mu)
-            distr = D.Normal(mu, std, validate_args=self.validate_args)
+            distr = D.Normal(mu, std, validate_args=False)
             sigma = std
 
         elif self.dist_type == 'dreamerv3_squashed_normal':
             lo, hi = self.minstd, self.maxstd
             std = (hi - lo) * torch.sigmoid(logstd + 2.0) + lo
-            distr = SquashedNormal(mu, std, validate_args=self.validate_args)
+            distr = SquashedNormal(mu, std, validate_args=False)
             sigma = std
 
         else:

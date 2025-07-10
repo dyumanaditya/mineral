@@ -4,9 +4,9 @@ task=Rewarped agent=RewarpedAnymalPPO task.env.env_name=Anymal \
 task.env.no_grad=True \
 \
 logdir="workdir/RewarpedAnymal10M-PPO/$(date +%Y%m%d-%H%M%S.%2N)" \
-agent.ppo.max_agent_steps=10e6 \
+agent.ppo.max_agent_steps=655e6 \
 \
-num_envs=64 env_render=True headless=False task.env.render=True agent.render=True \
+num_envs=4096 env_render=False headless=True task.env.render=False agent.render=False \
 \
 wandb.mode=online wandb.project=rewarped-quadruped \
 run=train_eval seed=100

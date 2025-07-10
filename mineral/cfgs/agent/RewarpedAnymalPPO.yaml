@@ -33,7 +33,7 @@ network:
 
 ppo:
   multi_gpu: ${...multi_gpu}
-  num_actors: 64
+  num_actors: 4096
 
   reward_shaper:
     fn: scale
@@ -41,7 +41,7 @@ ppo:
 
   max_agent_steps: 4.1e6
   horizon_len: 32
-  minibatch_size: 2048
+  minibatch_size: 32768
 
   normalize_value: True
   value_bootstrap: True
